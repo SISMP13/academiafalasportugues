@@ -1,0 +1,26 @@
+.bootstrap-duallistbox-container {
+  margin-bottom: .25rem !important;
+
+  .filter {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .btn-group.buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+    order: 4; /* Con 1 es suficiente, pero como hay 4 elementos pongo 4 para asegurarme */
+
+    button {
+      max-width: 60px;
+      margin-left: 1rem;
+      border-radius: .25rem !important;
+    }
+  }
+
+  .box1, .box2 {
+    display: flex;
+    flex-flow: column;
+  }
+}

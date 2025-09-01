@@ -1,0 +1,101 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+// Select2
+@import "~select2/dist/css/select2.min.css";
+
+// DataTables
+@import "~datatables.net-bs4/css/dataTables.bootstrap4.css";
+@import "~datatables.net-buttons-bs4/css/buttons.bootstrap4.css";
+@import "~datatables.net-rowreorder-bs4/css/rowReorder.bootstrap4.css";
+
+// Toggle button
+@import "../css/switch-button.css";
+
+// Custom
+@import "../css/app.css";
+
+// Custom rules
+
+.table-bpanel{
+    table.table-2-columns{
+        tr{
+            td:first-child{
+                width:75%;
+            }
+
+            td:last-child{
+                width:25%;
+            }
+
+            th:first-child{
+                width:75%;
+            }
+
+            th:last-child{
+                width:25%;
+            }
+        }
+    }
+}
+
+.sidebar-light .nav.has-active-border .nav-item.active > .nav-link::before{
+    display:none !important;
+}
+
+.sidebar-light .submenu .nav-text::before{
+    display:none !important;
+}
+
+.rappasoft-centered-row {
+    vertical-align: middle;
+}
+
+.body-container > .main-container > .main-content {
+  padding-bottom: 2rem;
+}
+
+@import "../../../../node_modules/bootstrap-duallistbox/dist/bootstrap-duallistbox.min.css";
+
+.dashboard .btn {
+    border-radius: 0 !important;
+    padding: .5rem 1rem !important;
+}
+
+.dashboard .card-body {
+    padding: 1rem !important;
+}
+
+[x-cloak] { display: none !important; }
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  button {
+    height: 100%;
+  }
+
+  span.select2-selection__choice__display {
+    padding-left: 20px;
+  }
+}
+
+.order-list-status {
+    text-align: center;
+}
+
+.order-list-status > div {
+    display: inline-block;
+    margin: 0 auto;
+    padding: 0.1rem 1rem;
+    border-radius: 1rem;
+    border: 2px solid rgba(0,0,0, 0.05)
+}

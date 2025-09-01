@@ -1,0 +1,15 @@
+th {
+    font-size: 0.8rem;
+}
+
+td {
+    font-size: 0.8rem;
+    max-height: 10px;
+}
+
+.btn-primary-outline {
+    background-color: transparent;
+    border-color: #ccc;
+    margin: 0!important;
+    padding: 0!important;
+}
