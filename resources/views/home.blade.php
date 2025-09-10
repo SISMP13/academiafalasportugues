@@ -469,7 +469,7 @@ background: white;
 
 
     <!-- Start Hero Section -->
-    <section class="td_hero td_style_3 td_center td_hobble" style="height: 445px;">
+  {{--  <section class="td_hero td_style_3 td_center td_hobble" style="height: 445px;">
         <div class="container">
             <div class="td_hero_text wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.5s">
                 <p class="td_hero_subtitle_up td_fs_18 td_accent_color td_spacing_1 td_semibold text-uppercase td_mb_14">100 % Quality Qurantee</p>
@@ -489,7 +489,7 @@ background: white;
                 </div>
             </div>
         </div>
-    </section>
+    </section>--}}
     <!-- End Hero Section -->
 
 
