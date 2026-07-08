@@ -15,9 +15,9 @@ de las sesiones de sliders del Home, banner superior e inscripciones a cursos.
 
    php artisan home:install
 
-3) Registrar los permisos nuevos de edición de inscripciones
-   (courses.course-inscriptions.edit / courses.course-inscriptions.update).
-   También idempotente:
+3) Registrar los permisos nuevos de edición y borrado de inscripciones
+   (courses.course-inscriptions.edit / update / destroy).
+   También idempotente, vuelve a ejecutarse sin problema si ya se hizo antes:
 
    php artisan course-inscriptions:install
 
