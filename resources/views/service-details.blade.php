@@ -14,9 +14,16 @@
     )
 @endsection
 @push('styles')
+
+
     <style>
         .header-spacer {
             height: 150px;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.56em;
         }
     </style>
 @endpush
@@ -48,7 +55,7 @@
 
 
             <!-- Start Team Details Section -->
-            <section>
+            <section >
                 <div class="container">
                     <div class="row td_gap_y_40">
                         <div class="col-lg-5">
@@ -110,7 +117,7 @@
                                             </li>
                                         @endif
 
-                                        <!-- Dirección -->
+
                                         @if(!empty($generalConfiguration->business_address))
                                             <li>
                                                 <i class="td_team_member_contact_icon td_center td_accent_color">
@@ -130,10 +137,44 @@
                                         @endif
                                     </ul>
                                 </div>
-                                <div class="td_btns_group">
-                                    <a href="/contact" class="td_btn td_style_1 td_radius_10 td_medium">
+
+                                <div class="td_footer_social_btns td_fs_20 td_mt_20">
+                                    @if(!empty($generalConfiguration->facebook))
+                                        <a href="{{ $generalConfiguration->facebook }}" class="td_center" target="_blank" aria-label="Facebook de {{ $generalConfiguration->business_name ?? 'Tu Empresa' }}">
+                                            <i class="fa-brands fa-facebook-f"></i>
+                                        </a>
+                                    @endif
+
+                                    @if(!empty($generalConfiguration->twitter))
+                                        <a href="{{ $generalConfiguration->twitter }}" class="td_center" target="_blank" aria-label="Twitter (X) de {{ $generalConfiguration->business_name ?? 'Tu Empresa' }}">
+                                            <i class="fa-brands fa-x-twitter"></i>
+                                        </a>
+                                    @endif
+
+                                    @if(!empty($generalConfiguration->instagram))
+                                        <a href="{{ $generalConfiguration->instagram }}" class="td_center" target="_blank" aria-label="Instagram de {{ $generalConfiguration->business_name ?? 'Tu Empresa' }}">
+                                            <i class="fa-brands fa-instagram"></i>
+                                        </a>
+                                    @endif
+
+                                    @if(!empty($generalConfiguration->whatsapp))
+                                        <a href="https://wa.me/{{ preg_replace('/\D+/', '', $generalConfiguration->whatsapp) }}" class="td_center" target="_blank" aria-label="WhatsApp de {{ $generalConfiguration->business_name ?? 'Tu Empresa' }}">
+                                            <i class="fa-brands fa-whatsapp"></i>
+                                        </a>
+                                    @endif
+
+                                    @if(!empty($generalConfiguration->linkedin))
+                                        <a href="{{ $generalConfiguration->linkedin }}" class="td_center" target="_blank" aria-label="LinkedIn de {{ $generalConfiguration->business_name ?? 'Tu Empresa' }}">
+                                            <i class="fa-brands fa-linkedin-in"></i>
+                                        </a>
+                                    @endif
+                                </div>
+
+
+                                <div class="td_btns_group mt-2">
+                                    <a href="/contacto" class="td_btn td_style_1 td_radius_10 td_medium">
                   <span class="td_btn_in td_white_color td_accent_bg">
-                    <span>Contact With Me</span>
+                    <span>{{__("Contact With Me")}}</span>
                     <svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M15.1575 4.34302L3.84375 15.6567" stroke="currentColor" stroke-width="1.5"
                             stroke-linecap="round" stroke-linejoin="round"></path>
@@ -151,16 +192,18 @@
                           d="M16.5456 16.2357C15.99 16.2348 15.4399 16.3491 14.9282 16.5718C14.4165 16.7945 13.9537 17.121 13.5675 17.5318L8.76696 14.3613C9.14169 13.3618 9.14169 12.2546 8.76696 11.2551L13.5675 8.08455C14.2428 8.79497 15.1372 9.24187 16.0975 9.34876C17.0579 9.45566 18.0245 9.2159 18.8319 8.67052C19.6394 8.12515 20.2374 7.30806 20.5237 6.35912C20.8101 5.41017 20.7668 4.38836 20.4015 3.46858C20.0361 2.5488 19.3713 1.78824 18.5209 1.31707C17.6704 0.845893 16.6872 0.693404 15.7395 0.885698C14.7918 1.07799 13.9386 1.60312 13.3258 2.37119C12.713 3.13926 12.3788 4.10253 12.3804 5.09613C12.382 5.62706 12.4773 6.15328 12.6615 6.64925L7.86101 9.81975C7.28306 9.209 6.54115 8.78943 5.73014 8.6147C4.91914 8.43997 4.0759 8.51802 3.30824 8.83887C2.54059 9.15971 1.88341 9.70877 1.42074 10.4158C0.958073 11.1229 0.710938 11.9559 0.710938 12.8082C0.710938 13.6605 0.958073 14.4934 1.42074 15.2005C1.88341 15.9076 2.54059 16.4566 3.30824 16.7775C4.0759 17.0983 4.91914 17.1764 5.73014 17.0016C6.54115 16.8269 7.28306 16.4073 7.86101 15.7966L12.6615 18.9671C12.4773 19.4631 12.382 19.9893 12.3804 20.5202C12.3804 21.3676 12.6246 22.196 13.0823 22.9005C13.54 23.6051 14.1905 24.1543 14.9517 24.4785C15.7128 24.8028 16.5503 24.8877 17.3583 24.7224C18.1662 24.557 18.9084 24.149 19.4909 23.5498C20.0735 22.9506 20.4702 22.1872 20.6309 21.3561C20.7916 20.525 20.7091 19.6635 20.3939 18.8806C20.0786 18.0977 19.5447 17.4286 18.8598 16.9578C18.1748 16.487 17.3695 16.2357 16.5456 16.2357ZM16.5456 2.52545C17.0399 2.52545 17.5231 2.67622 17.9341 2.95869C18.3451 3.24116 18.6654 3.64264 18.8546 4.11237C19.0437 4.5821 19.0932 5.09898 18.9968 5.59764C18.9004 6.09631 18.6623 6.55436 18.3128 6.91388C17.9633 7.27339 17.518 7.51823 17.0332 7.61742C16.5484 7.71661 16.0459 7.6657 15.5893 7.47113C15.1326 7.27656 14.7423 6.94707 14.4677 6.52432C14.193 6.10158 14.0465 5.60456 14.0465 5.09613C14.0492 4.41521 14.3134 3.76298 14.7815 3.2815C15.2496 2.80001 15.8837 2.52827 16.5456 2.52545ZM4.88283 15.3789C4.38854 15.3789 3.90535 15.2281 3.49436 14.9456C3.08338 14.6631 2.76305 14.2617 2.57389 13.7919C2.38474 13.3222 2.33524 12.8053 2.43168 12.3067C2.52811 11.808 2.76613 11.3499 3.11565 10.9904C3.46516 10.6309 3.91047 10.3861 4.39526 10.2869C4.88006 10.1877 5.38256 10.2386 5.83922 10.4332C6.29589 10.6277 6.6862 10.9572 6.96082 11.38C7.23543 11.8027 7.382 12.2997 7.382 12.8082C7.37926 13.4891 7.11508 14.1413 6.64698 14.6228C6.17889 15.1043 5.54481 15.376 4.88283 15.3789ZM16.5456 23.0909C16.0514 23.0909 15.5682 22.9401 15.1572 22.6577C14.7462 22.3752 14.4259 21.9737 14.2367 21.504C14.0476 21.0342 13.9981 20.5174 14.0945 20.0187C14.1909 19.52 14.4289 19.062 14.7785 18.7025C15.128 18.343 15.5733 18.0981 16.0581 17.9989C16.5429 17.8997 17.0454 17.9506 17.502 18.1452C17.9587 18.3398 18.349 18.6693 18.6236 19.092C18.8982 19.5148 19.0448 20.0118 19.0448 20.5202C19.0421 21.2011 18.7779 21.8534 18.3098 22.3348C17.8417 22.8163 17.2076 23.0881 16.5456 23.0909Z"
                           fill="currentColor"/>
                     </svg>
-                    <span>Share</span>
+                    <span>{{__("Share")}}</span>
                   </span>
                                     </a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-7">
-                            <div class="td_team_details_content">
-                                <div class="td_section_heading td_style_2 td_mb_20" style="font-size: 19px;">
-                                    <h2 class="td_contact_info_title td_fs_36 mb-0"> {!! $model->text !!}</h2>
+                            <div class="td_shape_section_9">
+                                <div class="td_team_details_content">
+                                    <div class="td_section_heading td_style_2 td_mb_20" style="font-size: 19px;">
+                                        <p class="td_fs_18 td_mb_30"> {!! $model->text !!}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -272,7 +315,10 @@
         <div class="td_height_120 td_height_lg_80"></div>
     </section>
 
-    <x-service-list/>
+
+    <div class="container-custom2" style="max-width: 1660px;">
+        <x-service-list class="service__slider-glide"/>
+    </div>
 
     @isset($model->images['Galería'][0])
         <hr class="hr_50">

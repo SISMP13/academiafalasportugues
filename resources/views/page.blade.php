@@ -7,12 +7,33 @@
     'metaDescription' => $model->meta_description,
     'metaKeywords' => $model->meta_keywords,
     'pagina/'.$model->slug,
-    'socialImage' => $model->images["Imagen social"][0] ?? $generalConfiguration->images['Imagen social'][0]
+    'socialImage' => $model->images["Imagen social"][0] ?? $generalConfiguration->images['Imagen enlace'][0]
     ])
 @endsection
 
 @push('styles')
     <style>
+
+        @media (max-width: 991px) {
+            .td_fs_48 {
+                font-size: 28px;
+            }
+            .td_page_heading {
+                padding: 56px 0 60px;
+            }
+            .td_fs_20 {
+                font-size: 14px;
+            }
+            .header-spacer{
+                height: 1px !important;
+            }
+        }
+        .td_shape_section_9 ul li::before {
+            content: "✔";
+            position: absolute;
+            left: 0px;
+            top: 12px;
+        }
 
         @media (min-width: 991px) {
             .td_image_box.td_style_6.td_type_1 .td_image_box_img_2 {
@@ -37,6 +58,10 @@
             color: #000000;
         }
 
+        p{
+            font-size: 18px;
+            line-height: 1.56em;
+        }
 
 
     </style>
@@ -62,7 +87,7 @@
         </section>
     @else
         <section class="td_page_heading td_center text-center td_hobble">
-            <div class="container">
+            <div class="container-custom2">
                 <div class="td_page_heading_in">
                     <h1 class="td_white_color td_fs_48 td_mb_10">{{ $model->title }}</h1>
                     <ol class="breadcrumb m-0 td_fs_20 td_opacity_8 td_semibold td_white_color">
@@ -81,11 +106,11 @@
     <!-- Start Contenido Página -->
     <section>
         <div class="td_height_120 td_height_lg_80"></div>
-        <div class="container">
+        <div class="container-custom2">
             <div class="row align-items-center td_gap_y_40">
 
                 {{-- Columna de imágenes con estilo plantilla --}}
-                <div class="col-lg-6">
+                <div class="col-lg-5">
                     <div class="td_image_box td_style_6 td_type_1">
 
                         {{-- Imagen principal --}}
@@ -117,6 +142,7 @@
                             </div>
                         </div>
 
+
                         {{-- Shapes decorativos (se pueden dejar fijos o dinámicos) --}}
                         <div class="td_image_box_shape_1 position-absolute"></div>
                         <div class="td_image_box_shape_2 position-absolute">
@@ -129,7 +155,7 @@
                 </div>
 
                 {{-- Columna de textos principales --}}
-                <div class="col-lg-6 wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.4s">
+                <div class="col-lg-7 wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.4s">
                     <div class="td_section_heading td_style_1 td_mb_30">
 
                         @if(!empty($model->subtitle))
@@ -143,7 +169,13 @@
                         @endif
 
                         @if(!empty($model->title))
-                            {!! $model->text !!}
+                                <div class="td_shape_section_9">
+                                    <div class="td_team_details_content">
+                                        <div class="td_section_heading td_style_2 td_mb_20" style="font-size: 19px;">
+                                            <p class="td_fs_18 td_mb_30"> {!! $model->text !!}</p>
+                                        </div>
+                                    </div>
+                                </div>
                         @endif
 
                         @if(!empty($model->title_2))
@@ -151,7 +183,15 @@
                         @endif
 
                         @if(!empty($model->long_text))
-                            {!! $model->long_text !!}
+                                <div class="td_shape_section_9">
+                                    <div class="td_team_details_content">
+                                        <div class="td_section_heading td_style_2 td_mb_20" style="font-size: 19px;">
+                                            <p class="td_fs_18 td_mb_30">{!! $model->long_text !!}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+
                         @endif
 
                     </div>
@@ -168,11 +208,11 @@
         @if(!empty($model->title_3) || !empty($model->long_text_2) || !empty($model->title_4))
             <section class="td_gray_bg_6">
                 <div class="td_height_120 td_height_lg_80"></div>
-                <div class="container">
+                <div class="container-custom2">
                     <div class="row align-items-center td_gap_y_40">
 
                         {{-- Columna de textos (izquierda) --}}
-                        <div class="col-lg-6 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.2s">
+                        <div class="col-lg-7 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.2s">
                             <div class="td_pr_20">
                                 <div class="td_section_heading td_style_1 td_mb_30">
 
@@ -185,9 +225,13 @@
                                     @endif
 
                                     @if(!empty($long_text_2 ?? $model->long_text_2))
-                                        <p class="td_section_subtitle td_fs_18 mb-0">
-                                            {!! $model->long_text_2 !!}
-                                        </p>
+                                            <div class="td_shape_section_9">
+                                                <div class="td_team_details_content">
+                                                    <div class="td_section_heading td_style_2 td_mb_20" style="font-size: 19px;">
+                                                        <p class="td_fs_18 td_mb_30">{!! $model->long_text_2 !!}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
                                     @endif
                                 </div>
 
@@ -216,7 +260,7 @@
                         </div>
 
                         {{-- Columna de imagen (derecha) --}}
-                        <div class="col-lg-6 wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.3s">
+                        <div class="col-lg-5 wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.3s">
                             <div class="td_pl_65">
                                 @if(isset($model->images['Imagen social'][0]))
                                     <img src="{{ $model->images['Imagen social'][0]->mediaModel->getUrl() }}"
@@ -238,11 +282,17 @@
         {{-- Bloque centrado solo para text2 --}}
         @if(!empty($model->text2) || !empty($model->long_text_3))
             <div class="td_height_120 td_height_lg_80"></div>
-            <div class="container">
+            <div class="container-custom2">
                 <div class="row justify-content-center">
                     <div class="col-lg-10 text-center">
-                        <p>{!! $model->long_text_3 !!}</p>
-                        <p>{!! $model->text2 !!}</p>
+                        <div class="td_shape_section_9">
+                            <div class="td_team_details_content">
+                                <div class="td_section_heading td_style_2 td_mb_20" style="font-size: 19px;">
+                                    <p class="td_fs_18 td_mb_30">{!! $model->long_text_3 !!}</p>
+                                    <p>{!! $model->text2 !!}</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -253,9 +303,11 @@
     </section>
     <!-- End Contenido Página -->
     @if($model->id == 1)
-        <div class="container-custom2">
-            <x-service-list class="service__slider-glide"/>
-        </div>
+
+            <div class="container-custom" style="padding: 1rem 4rem">
+                <x-service-list class="service__slider-glide"/>
+            </div>
+
     @endif
 
     {{-- Mostramos enlace al test solo si la página es la #3 --}}
@@ -277,7 +329,7 @@
             </div>
 
             <div class="td_height_112 td_height_lg_75"></div>
-            <div class="container">
+            <div class="container-custom2">
                 <div class="row td_gap_y_40">
 
                     {{-- Columna izquierda con imagen --}}
@@ -379,10 +431,10 @@
                     <div class="td_height_120 td_height_lg_80"></div>
 
                     <!-- Contenedor del formulario -->
-                    <div class="container">
+                    <div class="container-custom2">
 
                                     <!-- Iframe del test -->
-                                    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSf5Bn_LcK-gtXJsUaCNsA5iVdUDiKfLf5vpYehIVvdCLVlxXA/viewform?embedded=true"
+                                    <iframe src="{{ $model->breadcrumb }}"
                                             frameborder="0"
                                             style="width: 100%; min-height: 500px; display: block;">
                                     </iframe>

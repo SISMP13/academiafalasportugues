@@ -10,95 +10,473 @@
     ]
     )
 @endsection
+
+@push('styles')
+    <style>
+    .td_sign_thumb {
+    /* padding-left: 44px; */
+    height: 100%;
+    }
+    .td_sign_thumb {
+        padding-left: 0px;
+        height: 100%;
+    }
+
+        .header-spacer {
+            height: 150px;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.56em;
+        }
+
+        .form-check-label {
+            font-size: 1.1rem;
+        }
+
+        .header-space{
+            height: 36px
+        }
+    </style>
+@endpush
+
+
 @section('content')
-    @isset($response)
-        @if($response['status'] == 'success')
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ $response['message'] }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
-        @if($response['status'] == 'error')
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{ $response['message'] }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
-    @endisset
-    @if($errors->any())
-        <div class="alert alert-danger" role="alert">
-            @foreach($errors->all() as $error)
-                {{$error}}<br>
-            @endforeach
-        </div>
-    @endif
-    <div class="form-block-wrapper">
-        <form action="{{route('course-inscription.store', ['id' => $model->id])}}" method="post" class="form-validate">
-            @csrf
-            <div class="form-block mb-5">
-                <input type="text" class="form-control" required name="name" id="name" value="{{old('name')}}" placeholder="{{__("Name")}}*">
-            </div>
-            <div class="form-block mb-5">
-                <input type="text" class="form-control" name="phone" id="phone" value="{{old('phone')}}" placeholder="{{__("Phone")}}">
-            </div>
-            <div class="form-block mb-5">
-                <input type="text" class="form-control" required name="email" id="email" value="{{old('email')}}" placeholder="{{__("Email")}}*">
-            </div>
-            <div class="form-block mb-5">
-                <textarea class="form-control" name="message" id="message" placeholder="{{__("Message")}}" rows="6">{{old('message')}}</textarea>
-            </div>
-            <div class="column one">
-                <div class="mb-4 form-check form-switch">
-                    <div>
-                        <input class="form-check-input @error('policies') is-invalid @enderror" type="checkbox" role="switch" name="policies" id="policies" aria-describedby="validationPoliciesFeedback" required>
-                        <label class="form-check-label" for="policies">
-                            <span class="text-danger">*</span> {{ __('I have read and accept the following legal policies') }}:&nbsp;
-                        </label>
-                        <div>
-                            <a class="link-secondary-custom form-check-label" href="{{route('legal-text.public',$lopd->slug)}}" title="{{ __('Privacy policy') }}" target="_blank" rel="noopener noreferrer">{{ __('Privacy policy') }}</a>&nbsp;
-                            <a href="#" class="link-secondary-custom form-check-label" data-fancybox data-src="#data_protect" title="{{__('Basic information about data protection') }}">
-                                {{__("Basic information about data protection")}}
-                            </a>
-                        </div>
-                    </div>
-                    @error('policies')
-                    <div id="validationPoliciesFeedback" class="invalid-feedback">
-                        <i class="fa fa-exclamation-circle text-danger me-1"></i> {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-                <div class="my-1">
-                    <em>(<span class="text-danger">*</span>) {{ __('Required fields') }}</em>
-                </div>
-            </div>
-            <div class="column one">
-                <div class="my-1 text-center">
-                    <div class="my-2 captcha d-flex justify-content-center align-items-center">
-                        <span>{!! captcha_img('default', ['alt' => 'Captcha']) !!}</span>
-                        <button type="button" class="button-recaptcha bg-danger border-0 reload ms-3" id="reload">
-                            &#x21bb;
-                        </button>
-                    </div>
-                    <div class="row justify-content-center">
-                        <div class="col-md-6">
-                            <div class="mb-4 row text-center">
-                                <small class="text-center">(<strong class="text-danger">*</strong>) {{__("This code is obligatory")}}</small>
-                                <div class="form-block mt-3">
-                                    <input type="text" class="form-control @error('captcha') is-invalid @enderror" name="captcha" id="captcha" placeholder="{{__("enter the code from the image")}}" required>
-                                </div>
-                                @error('captcha')
-                                <div id="validationFeedback_captcha" class="invalid-feedback">
-                                    <i class="fa fa-exclamation-circle text-danger-m1 me-2"></i> {{ $message }}
-                                </div>
-                                @enderror
+
+
+    @isset($model->images['Portada'][0])
+        <div class="breadcrumb-wrapper"
+             style="background-image: url({{$model->images['Portada'][0]->mediaModel->getUrl()}})">
+            <div class="header-space"></div>
+            <div class="container">
+                <div class="row breadcrumb__section">
+                    <div class="col-md-12">
+                        <div class="text text-center">
+                            <div class="heading">
+                                <h1 class="text-white">{{$model->title}}</h1>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <button class="btn-custom-secondary text-white border-0 d-block m-auto" id="submit" type="submit">
-                {{__("Submit")}}
-            </button>
-        </form>
+        </div>
+    @endisset
+    <div class="regular-page default-page">
+        <div class="container-custom2">
+
+            <!-- Start Team Details Section -->
+            <section>
+                <div class="container">
+                    <div class="row td_gap_y_40">
+                        <div class="col-lg-5">
+                            <div class="td_team_details_left">
+                                <div class="td_team_details_thumb td_accent_bg text-center td_radius_10 td_mb_30">
+                                    @isset($model->images['Imagen destacada'][0])
+                                        <img src="{{ $model->images['Imagen destacada'][0]->mediaModel->getUrl() }}"
+                                             alt="{{ $model->title }}"
+                                             class="td_radius_10 w-100">
+                                    @else
+                                        <img src="{{ asset('assets/template/img/others/team_details.png') }}"
+                                             alt="{{ $model->title }}"
+                                             class="td_radius_10 w-100">
+                                    @endisset
+                                </div>
+
+
+                                <div class="td_mb_30">
+                                    <ul class="td_team_member_contact_list td_mp_0 td_fs_18 td_semibold td_heading_color">
+                                        <!-- Teléfono -->
+                                        @if(!empty($generalConfiguration->business_mobile))
+                                            <li>
+                                                <i class="td_team_member_contact_icon td_center td_accent_color">
+                                                    <!-- Aquí puedes poner tu SVG de teléfono -->
+                                                    <svg width="20" height="19" viewBox="0 0 20 19" fill="none"
+                                                         xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M15.1558 11.3568C14.7628 10.966 14.2889 10.7571 13.7865 10.7571C13.2882 10.7571 12.8102 10.9622 12.401 11.353L11.1209 12.5718C11.0155 12.5177 10.9102 12.4674 10.8089 12.4171C10.6631 12.3474 10.5253 12.2816 10.4079 12.212C9.20872 11.4845 8.11896 10.5365 7.07376 9.30995C6.56737 8.69858 6.22707 8.18396 5.97995 7.66159C6.31215 7.37139 6.62004 7.06958 6.91982 6.77937C7.03325 6.67103 7.14668 6.55882 7.26012 6.45048C8.11086 5.63791 8.11086 4.58544 7.26012 3.77287L6.15415 2.71653C6.02857 2.59658 5.89893 2.47276 5.7774 2.34894C5.53433 2.10904 5.27911 1.8614 5.01578 1.62923C4.62282 1.25777 4.15289 1.06043 3.65865 1.06043C3.16441 1.06043 2.68637 1.25777 2.28126 1.62923C2.27721 1.6331 2.27721 1.6331 2.27316 1.63697L0.895768 2.96417C0.377222 3.45945 0.0814882 4.06307 0.0166699 4.76343C-0.0805576 5.89329 0.267841 6.94576 0.535216 7.6345C1.1915 9.32542 2.17188 10.8925 3.63434 12.5718C5.40874 14.5955 7.5437 16.1936 9.98248 17.3196C10.9142 17.7413 12.158 18.2405 13.5475 18.3256C13.6326 18.3295 13.7217 18.3333 13.8027 18.3333C14.7385 18.3333 15.5245 18.0122 16.1402 17.3737C16.1443 17.366 16.1524 17.3621 16.1564 17.3544C16.3671 17.1106 16.6102 16.8901 16.8654 16.654C17.0396 16.4954 17.2178 16.329 17.392 16.1549C17.7931 15.7563 18.0038 15.292 18.0038 14.8161C18.0038 14.3363 17.789 13.8758 17.3799 13.4889L15.1558 11.3568ZM16.6061 15.4313C16.6021 15.4313 16.6021 15.4352 16.6061 15.4313C16.4481 15.5938 16.2861 15.7409 16.1119 15.9034C15.8485 16.1433 15.5812 16.3948 15.33 16.6772C14.9208 17.0951 14.4387 17.2925 13.8068 17.2925C13.746 17.2925 13.6812 17.2925 13.6204 17.2886C12.4172 17.2151 11.2991 16.7662 10.4605 16.3832C8.16757 15.323 6.15415 13.8178 4.48103 11.9102C3.09959 10.3199 2.17593 8.84949 1.56421 7.27078C1.18745 6.30731 1.04971 5.55665 1.11048 4.84855C1.15099 4.39584 1.33329 4.02051 1.66954 3.69935L3.05098 2.37989C3.24948 2.2019 3.46014 2.10517 3.66675 2.10517C3.92197 2.10517 4.12858 2.2522 4.25822 2.37602C4.26227 2.37989 4.26632 2.38376 4.27037 2.38763C4.51749 2.60819 4.75246 2.83648 4.99958 3.08025C5.12516 3.20407 5.2548 3.32789 5.38444 3.45558L6.4904 4.51192C6.91982 4.92207 6.91982 5.30127 6.4904 5.71143C6.37292 5.82364 6.25948 5.93585 6.142 6.04419C5.8017 6.37696 5.47761 6.68651 5.12516 6.98832C5.11706 6.99606 5.10896 6.99993 5.10491 7.00767C4.75651 7.34043 4.82133 7.66546 4.89425 7.88601C4.8983 7.89762 4.90235 7.90923 4.9064 7.92084C5.19403 8.58637 5.59915 9.21321 6.21492 9.96L6.21897 9.96387C7.33709 11.2795 8.51597 12.3048 9.81639 13.0903C9.98249 13.1909 10.1526 13.2722 10.3147 13.3496C10.4605 13.4192 10.5983 13.485 10.7157 13.5547C10.7319 13.5624 10.7482 13.574 10.7644 13.5817C10.9021 13.6475 11.0317 13.6785 11.1654 13.6785C11.5017 13.6785 11.7123 13.4773 11.7812 13.4115L13.1667 12.0882C13.3044 11.9566 13.5232 11.798 13.7784 11.798C14.0296 11.798 14.2362 11.9489 14.3618 12.0804C14.3658 12.0843 14.3658 12.0843 14.3699 12.0882L16.6021 14.2202C17.0193 14.6149 17.0193 15.0211 16.6061 15.4313Z"
+                                                            fill="currentColor"/>
+                                                        <path
+                                                            d="M10.3592 4.36101C11.4206 4.53127 12.3848 5.01107 13.1545 5.74625C13.9242 6.48143 14.4225 7.40234 14.6048 8.41612C14.6494 8.6715 14.8803 8.84949 15.1436 8.84949C15.1761 8.84949 15.2044 8.84562 15.2368 8.84175C15.5366 8.79532 15.7351 8.52446 15.6865 8.23813C15.4677 7.01154 14.8601 5.89329 13.9324 5.0072C13.0046 4.12111 11.8339 3.5407 10.5496 3.33176C10.2499 3.28533 9.97033 3.47493 9.91767 3.75739C9.865 4.03985 10.0595 4.31458 10.3592 4.36101Z"
+                                                            fill="currentColor"/>
+                                                        <path
+                                                            d="M19.1583 8.08722C18.7978 6.06741 17.8012 4.22945 16.2699 2.76683C14.7385 1.3042 12.8142 0.352338 10.6995 0.00796375C10.4038 -0.0423381 10.1243 0.151131 10.0716 0.433595C10.023 0.719929 10.2215 0.986916 10.5213 1.03722C12.4091 1.3429 14.1309 2.19803 15.5001 3.50201C16.8694 4.80986 17.7607 6.45435 18.0807 8.25748C18.1253 8.51285 18.3562 8.69085 18.6195 8.69085C18.6519 8.69085 18.6803 8.68698 18.7127 8.68311C19.0084 8.64054 19.211 8.36969 19.1583 8.08722Z"
+                                                            fill="currentColor"/>
+                                                    </svg>
+                                                </i>
+                                                <a href="tel:+34{{ str_replace(' ', '', $generalConfiguration->business_mobile) }}">
+                                                    {{ $generalConfiguration->business_mobile }}
+                                                </a>
+                                            </li>
+                                        @endif
+
+                                        <!-- Email -->
+                                        @if(!empty($generalConfiguration->business_email))
+                                            <li>
+                                                <i class="td_team_member_contact_icon td_center td_accent_color">
+                                                    <!-- SVG de email -->
+                                                    <svg width="20" height="15" viewBox="0 0 20 15" fill="none"
+                                                         xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M18.1819 0.5H1.81817C0.814025 0.5 0 1.29282 0 2.27085V12.8959C0 13.8738 0.814025 14.6667 1.81817 14.6667H18.1818C19.186 14.6667 20 13.8738 20 12.8959V2.27085C20 1.29282 19.186 0.5 18.1819 0.5ZM1.81817 1.38543H18.1818C18.2857 1.38607 18.3887 1.40403 18.4864 1.43854L10.6182 9.10183C10.2803 9.43313 9.73057 9.43488 9.39041 9.10575C9.38908 9.10446 9.38771 9.10312 9.38639 9.10183L1.51364 1.43854C1.61129 1.40403 1.7143 1.38603 1.81817 1.38543ZM0.909103 12.8958V2.27085C0.904455 2.2193 0.904455 2.16745 0.909103 2.11589L6.53638 7.58333L0.909103 13.0508C0.904455 12.9992 0.904455 12.9474 0.909103 12.8958ZM18.1819 13.7812H1.81817C1.7143 13.7806 1.61129 13.7626 1.51364 13.7281L7.18181 8.20758L8.74092 9.72608C9.43369 10.4034 10.559 10.4054 11.2544 9.73068C11.256 9.72916 11.2575 9.7276 11.2591 9.72608L12.8182 8.20758L18.4864 13.7281C18.3887 13.7626 18.2857 13.7806 18.1819 13.7812ZM19.0909 13.0508L13.4637 7.58333L19.0909 2.11589C19.0956 2.16745 19.0956 2.2193 19.0909 2.27085V12.8959C19.0956 12.9474 19.0956 12.9992 19.0909 13.0508Z"
+                                                            fill="currentColor"/>
+                                                    </svg>
+                                                </i>
+                                                <a href="mailto:{{ $generalConfiguration->business_email }}">
+                                                    {{ $generalConfiguration->business_email }}
+                                                </a>
+                                            </li>
+                                        @endif
+
+                                        <!-- Dirección -->
+                                        @if(!empty($generalConfiguration->business_address))
+                                            <li>
+                                                <i class="td_team_member_contact_icon td_center td_accent_color">
+                                                    <!-- SVG de ubicación -->
+                                                    <svg width="17" height="21" viewBox="0 0 17 21" fill="none"
+                                                         xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M8.66602 0.835938C6.5443 0.835938 4.50947 1.67879 3.00919 3.17908C1.50891 4.67937 0.666059 6.71419 0.666059 8.83592C0.659475 10.8268 1.40197 12.7473 2.74605 14.2159L8.28602 20.6609C8.33296 20.7158 8.39123 20.7599 8.45683 20.7901C8.52243 20.8203 8.59379 20.8359 8.66602 20.8359C8.73824 20.8359 8.8096 20.8203 8.8752 20.7901C8.9408 20.7599 8.99907 20.7158 9.04601 20.6609L14.586 14.2159C15.9301 12.7473 16.6726 10.8268 16.666 8.83592C16.666 6.71419 15.8231 4.67937 14.3228 3.17908C12.8226 1.67879 10.7877 0.835938 8.66602 0.835938ZM13.826 13.5659L8.66602 19.5709L3.50604 13.5709C2.588 12.5694 1.98123 11.3225 1.75972 9.98206C1.53821 8.64166 1.71155 7.26576 2.25859 6.02218C2.80563 4.7786 3.70273 3.72108 4.84047 2.9786C5.97822 2.23612 7.30744 1.84078 8.66602 1.84078C10.0246 1.84078 11.3538 2.23612 12.4916 2.9786C13.6293 3.72108 14.5264 4.7786 15.0734 6.02218C15.6205 7.26576 15.7938 8.64166 15.5723 9.98206C15.3508 11.3225 14.744 12.5694 13.826 13.5709V13.5659Z"
+                                                            fill="currentColor"/>
+                                                        <path
+                                                            d="M8.66601 5.33593C7.97378 5.33593 7.2971 5.5412 6.72153 5.92578C6.14596 6.31037 5.69736 6.85699 5.43245 7.49653C5.16755 8.13607 5.09824 8.8398 5.23328 9.51874C5.36833 10.1977 5.70167 10.8213 6.19115 11.3108C6.68064 11.8003 7.30427 12.1336 7.9832 12.2687C8.66213 12.4037 9.36586 12.3344 10.0054 12.0695C10.6449 11.8046 11.1916 11.356 11.5761 10.7804C11.9607 10.2048 12.166 9.52816 12.166 8.83592C12.166 7.90767 11.7972 7.01743 11.1409 6.36105C10.4845 5.70468 9.59427 5.33593 8.66601 5.33593ZM8.66601 11.3359C8.17156 11.3359 7.68822 11.1893 7.2771 10.9146C6.86598 10.6399 6.54555 10.2494 6.35633 9.79263C6.16711 9.33582 6.1176 8.83315 6.21406 8.3482C6.31053 7.86325 6.54863 7.41779 6.89826 7.06816C7.24789 6.71853 7.69334 6.48043 8.17829 6.38396C8.66324 6.2875 9.1659 6.33701 9.62272 6.52623C10.0795 6.71545 10.47 7.03588 10.7447 7.447C11.0194 7.85812 11.166 8.34147 11.166 8.83592C11.166 9.49896 10.9026 10.1348 10.4338 10.6037C9.96493 11.0725 9.32905 11.3359 8.66601 11.3359Z"
+                                                            fill="currentColor"/>
+                                                    </svg>
+                                                </i>
+                                                <span>{{ $generalConfiguration->business_address }}</span>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </div>
+
+                                <div class="td_footer_social_btns td_fs_20 td_mt_20">
+                                    @if(!empty($generalConfiguration->facebook))
+                                        <a href="{{ $generalConfiguration->facebook }}" class="td_center" target="_blank" aria-label="Facebook de {{ $generalConfiguration->business_name ?? 'Tu Empresa' }}">
+                                            <i class="fa-brands fa-facebook-f"></i>
+                                        </a>
+                                    @endif
+
+                                    @if(!empty($generalConfiguration->twitter))
+                                        <a href="{{ $generalConfiguration->twitter }}" class="td_center" target="_blank" aria-label="Twitter (X) de {{ $generalConfiguration->business_name ?? 'Tu Empresa' }}">
+                                            <i class="fa-brands fa-x-twitter"></i>
+                                        </a>
+                                    @endif
+
+                                    @if(!empty($generalConfiguration->instagram))
+                                        <a href="{{ $generalConfiguration->instagram }}" class="td_center" target="_blank" aria-label="Instagram de {{ $generalConfiguration->business_name ?? 'Tu Empresa' }}">
+                                            <i class="fa-brands fa-instagram"></i>
+                                        </a>
+                                    @endif
+
+                                    @if(!empty($generalConfiguration->whatsapp))
+                                        <a href="https://wa.me/{{ preg_replace('/\D+/', '', $generalConfiguration->whatsapp) }}" class="td_center" target="_blank" aria-label="WhatsApp de {{ $generalConfiguration->business_name ?? 'Tu Empresa' }}">
+                                            <i class="fa-brands fa-whatsapp"></i>
+                                        </a>
+                                    @endif
+
+                                    @if(!empty($generalConfiguration->linkedin))
+                                        <a href="{{ $generalConfiguration->linkedin }}" class="td_center" target="_blank" aria-label="LinkedIn de {{ $generalConfiguration->business_name ?? 'Tu Empresa' }}">
+                                            <i class="fa-brands fa-linkedin-in"></i>
+                                        </a>
+                                    @endif
+                                </div>
+
+
+                                <div class="td_btns_group mt-2">
+                                    <a href="/contacto" class="td_btn td_style_1 td_radius_10 td_medium">
+                          <span class="td_btn_in td_white_color td_accent_bg">
+                            <span>{{__("Contact With Me")}}</span>
+                            <svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M15.1575 4.34302L3.84375 15.6567" stroke="currentColor" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round"></path>
+                              <path
+                                  d="M15.157 11.4142C15.157 11.4142 16.0887 5.2748 15.157 4.34311C14.2253 3.41142 8.08594 4.34314 8.08594 4.34314"
+                                  stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                  stroke-linejoin="round"></path>
+                            </svg>
+                          </span>
+                                    </a>
+                                    <a href="#" class="td_btn td_style_1 td_type_5 td_radius_10 td_medium">
+                          <span class="td_btn_in td_accent_color">
+                            <svg width="21" height="25" viewBox="0 0 21 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path
+                                  d="M16.5456 16.2357C15.99 16.2348 15.4399 16.3491 14.9282 16.5718C14.4165 16.7945 13.9537 17.121 13.5675 17.5318L8.76696 14.3613C9.14169 13.3618 9.14169 12.2546 8.76696 11.2551L13.5675 8.08455C14.2428 8.79497 15.1372 9.24187 16.0975 9.34876C17.0579 9.45566 18.0245 9.2159 18.8319 8.67052C19.6394 8.12515 20.2374 7.30806 20.5237 6.35912C20.8101 5.41017 20.7668 4.38836 20.4015 3.46858C20.0361 2.5488 19.3713 1.78824 18.5209 1.31707C17.6704 0.845893 16.6872 0.693404 15.7395 0.885698C14.7918 1.07799 13.9386 1.60312 13.3258 2.37119C12.713 3.13926 12.3788 4.10253 12.3804 5.09613C12.382 5.62706 12.4773 6.15328 12.6615 6.64925L7.86101 9.81975C7.28306 9.209 6.54115 8.78943 5.73014 8.6147C4.91914 8.43997 4.0759 8.51802 3.30824 8.83887C2.54059 9.15971 1.88341 9.70877 1.42074 10.4158C0.958073 11.1229 0.710938 11.9559 0.710938 12.8082C0.710938 13.6605 0.958073 14.4934 1.42074 15.2005C1.88341 15.9076 2.54059 16.4566 3.30824 16.7775C4.0759 17.0983 4.91914 17.1764 5.73014 17.0016C6.54115 16.8269 7.28306 16.4073 7.86101 15.7966L12.6615 18.9671C12.4773 19.4631 12.382 19.9893 12.3804 20.5202C12.3804 21.3676 12.6246 22.196 13.0823 22.9005C13.54 23.6051 14.1905 24.1543 14.9517 24.4785C15.7128 24.8028 16.5503 24.8877 17.3583 24.7224C18.1662 24.557 18.9084 24.149 19.4909 23.5498C20.0735 22.9506 20.4702 22.1872 20.6309 21.3561C20.7916 20.525 20.7091 19.6635 20.3939 18.8806C20.0786 18.0977 19.5447 17.4286 18.8598 16.9578C18.1748 16.487 17.3695 16.2357 16.5456 16.2357ZM16.5456 2.52545C17.0399 2.52545 17.5231 2.67622 17.9341 2.95869C18.3451 3.24116 18.6654 3.64264 18.8546 4.11237C19.0437 4.5821 19.0932 5.09898 18.9968 5.59764C18.9004 6.09631 18.6623 6.55436 18.3128 6.91388C17.9633 7.27339 17.518 7.51823 17.0332 7.61742C16.5484 7.71661 16.0459 7.6657 15.5893 7.47113C15.1326 7.27656 14.7423 6.94707 14.4677 6.52432C14.193 6.10158 14.0465 5.60456 14.0465 5.09613C14.0492 4.41521 14.3134 3.76298 14.7815 3.2815C15.2496 2.80001 15.8837 2.52827 16.5456 2.52545ZM4.88283 15.3789C4.38854 15.3789 3.90535 15.2281 3.49436 14.9456C3.08338 14.6631 2.76305 14.2617 2.57389 13.7919C2.38474 13.3222 2.33524 12.8053 2.43168 12.3067C2.52811 11.808 2.76613 11.3499 3.11565 10.9904C3.46516 10.6309 3.91047 10.3861 4.39526 10.2869C4.88006 10.1877 5.38256 10.2386 5.83922 10.4332C6.29589 10.6277 6.6862 10.9572 6.96082 11.38C7.23543 11.8027 7.382 12.2997 7.382 12.8082C7.37926 13.4891 7.11508 14.1413 6.64698 14.6228C6.17889 15.1043 5.54481 15.376 4.88283 15.3789ZM16.5456 23.0909C16.0514 23.0909 15.5682 22.9401 15.1572 22.6577C14.7462 22.3752 14.4259 21.9737 14.2367 21.504C14.0476 21.0342 13.9981 20.5174 14.0945 20.0187C14.1909 19.52 14.4289 19.062 14.7785 18.7025C15.128 18.343 15.5733 18.0981 16.0581 17.9989C16.5429 17.8997 17.0454 17.9506 17.502 18.1452C17.9587 18.3398 18.349 18.6693 18.6236 19.092C18.8982 19.5148 19.0448 20.0118 19.0448 20.5202C19.0421 21.2011 18.7779 21.8534 18.3098 22.3348C17.8417 22.8163 17.2076 23.0881 16.5456 23.0909Z"
+                                  fill="currentColor"/>
+                            </svg>
+                            <span>{{__("Share")}}</span>
+                          </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="td_team_details_content">
+                                <div class="td_section_heading td_style_2 td_mb_20" style="font-size: 19px;">
+                                    <h2 class="td_contact_info_title td_fs_36 mb-0"> {!! $model->title !!}</h2>
+                                   {!! $model->text !!}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="td_height_120 td_height_lg_80"></div>
+            </section>
+            <!-- End Team Details Section -->
+
+            <section class="td_shape_section_9 td_hobble">
+                {{-- Shapes decorativos --}}
+                <div class="td_shape_position_6 position-absolute td_hover_layer_3">
+                    <img src="{{ asset('assets/template/img/home_3/instructure_shape_1.png') }}" alt="">
+                </div>
+                <div class="td_shape_position_7 position-absolute td_hover_layer_5">
+                    <img src="{{ asset('assets/template/img/home_3/instructure_shape_2.png') }}" alt="">
+                </div>
+                <div class="td_shape_position_8 position-absolute td_hover_layer_3">
+                    <img src="{{ asset('assets/template/img/home_3/instructure_shape_3.png') }}" alt="">
+                </div>
+                <div class="td_shape_position_9 position-absolute td_hover_layer_5">
+                    <img src="{{ asset('assets/template/img/home_3/instructure_shape_4.png') }}" alt="">
+                </div>
+
+                <div class="td_height_112 td_height_lg_75"></div>
+                <div class="container">
+                    <div class="row td_gap_y_40">
+
+                        {{-- Columna izquierda con imagen --}}
+                        <div class="col-lg-6 wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.2s">
+                            <div class="td_image_box td_style_4">
+                                <div class="td_image_box_img_1">
+                                    @isset($generalConfiguration->images['Test imagen'][0])
+                                        <img
+                                            src="{{ $generalConfiguration->images['Test imagen'][0]->mediaModel->getUrl() }}"
+                                            alt="{{ $generalConfiguration->images['Test imagen'][0]->mediaModel->name }}"
+                                            class="td_radius_10">
+                                    @else
+                                        <img src="{{ asset('assets/template/img/home_3/instructor_img_1.png') }}" alt=""
+                                             class="td_radius_10">
+                                    @endisset
+                                </div>
+                                {{-- Shapes decorativos de la imagen --}}
+                                <div class="td_image_box_shape_1 td_accent_color">
+                                    <svg width="540" height="314" viewBox="0 0 540 314" fill="none"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M0.642023 204.034C0.642023 199.857 3.23902 196.119 7.15436 194.662L525.953 1.59735C532.515 -0.844766 539.491 4.03967 539.44 11.0415L537.989 212.199C537.954 217.026 534.477 221.139 529.723 221.976L12.376 313.066C6.25379 314.144 0.642023 309.434 0.642023 303.218L0.642023 204.034Z"
+                                            fill="currentColor"></path>
+                                    </svg>
+                                </div>
+                                <div class="td_image_box_shape_2">
+                                    <img src="{{ asset('assets/template/img/home_3/img_box_shape_2.svg') }}" alt="">
+                                </div>
+                                <div class="td_image_box_shape_3 td_accent_color">
+                                    <svg width="584" height="396" viewBox="0 0 584 396" fill="none"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <!-- SVG decorativo -->
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Columna derecha con texto y botón --}}
+                        <div class="col-lg-6 wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.3s">
+                            <div class="td_section_heading td_style_1">
+                                <p class="td_section_subtitle_up td_fs_18 td_semibold td_spacing_1 td_mb_10 text-uppercase td_accent_color">
+                                    Podemos começar?
+                                </p>
+                                <h2 class="td_section_title td_fs_48 td_mb_20">
+                                    ¿Quieres conocer tu nivel de portugués?
+                                </h2>
+                                <p class="td_section_subtitle td_fs_18 td_mb_36">
+                                    El objetivo de este test es poder orientarte en tu nivel de portugués de cara a tu
+                                    inscripción en alguno de nuestros cursos de portugués.
+                                </p>
+
+                                <div class="td_mb_40 td_list_3_wrap">
+                                    <ul class="td_list td_style_3 td_mp_0">
+                                        <li>
+                                            <a href="{{ url('/pagina/test-de-nivel-de-portugues-gratis') }}"
+                                               class="td_btn td_style_1 td_radius_30 td_medium">
+                                            <span class="td_btn_in td_white_color td_accent_bg">
+                                                <span>Hacer Test</span>
+                                                <svg width="19" height="20" viewBox="0 0 19 20" fill="none"
+                                                     xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M15.1575 4.34302L3.84375 15.6567" stroke="currentColor"
+                                                          stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                    <path
+                                                        d="M15.157 11.4142C15.157 11.4142 16.0887 5.2748 15.157 4.34311C14.2253 3.41142 8.08594 4.34314 8.08594 4.34314"
+                                                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round"/>
+                                                </svg>
+                                            </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="td_height_120 td_height_lg_80"></div>
+            </section>
+
+            <div style="text-align:center;">
+                <div class="row td_gap_y_40 align-items-center" style="width:100%; display:flex; justify-content:center;" id="form">
+                    <!-- Título principal -->
+                    <h2 class="td_section_title td_fs_36 td_mb_20">
+                        Inscribete a nuestro curso de <span style="color:#a8a611;">{{$model->title}}</span>
+                    </h2>
+                </div>
+            </div>
+
+            <section>
+                <div class="td_height_120 td_height_lg_80"></div>
+                <div class="container"  >
+                    <div class="row td_gap_y_40 align-items-stretch">
+                        {{-- COLUMNA IZQUIERDA: FORMULARIO --}}
+                        <div class="col-lg-6 d-flex">
+                            <div class="td_form_card td_style_1 td_radius_10 td_gray_bg_5 w-100 d-flex flex-column">
+                                <div class="td_form_card_in flex-grow-1 d-flex flex-column justify-content-between">
+                                    <div>
+                                        <h2 class="td_fs_36 td_mb_20 text-center">{{ __("Formulario de inscripción") }}</h2>
+                                        <hr>
+                                        <div class="td_height_30 td_height_lg_30"></div>
+
+                                        {{-- ALERTAS --}}
+                                        @isset($response)
+                                            @if($response['status'] == 'success')
+                                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                                    {{ $response['message'] }}
+                                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                </div>
+                                            @endif
+                                            @if($response['status'] == 'error')
+                                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                    {{ $response['message'] }}
+                                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                </div>
+                                            @endif
+                                        @endisset
+
+                                        @if($errors->any())
+                                            <div class="alert alert-danger" role="alert">
+                                                @foreach($errors->all() as $error)
+                                                    {{ $error }}<br>
+                                                @endforeach
+                                            </div>
+                                        @endif
+
+                                    @if($model->inscription)
+                                        {{-- FORMULARIO --}}
+                                        <form action="{{ route('course-inscription.store', ['id' => $model->id]) }}" method="post" class="form-validate">
+                                            @csrf
+
+                                            <input type="text" class="td_form_field td_mb_30 td_medium td_white_bg" name="name" id="name" value="{{ old('name') }}" placeholder="{{ __('Name') }} *" required>
+
+                                            <input type="text" class="td_form_field td_mb_30 td_medium td_white_bg" name="phone" id="phone" value="{{ old('phone') }}" placeholder="{{ __('Phone') }}">
+
+                                            <input type="email" class="td_form_field td_mb_30 td_medium td_white_bg" name="email" id="email" value="{{ old('email') }}" placeholder="{{ __('Email') }} *" required>
+
+                                            <textarea class="td_form_field td_mb_30 td_medium td_white_bg" name="message" id="message" placeholder="{{ __('Message') }}" rows="5">{{ old('message') }}</textarea>
+
+                                            {{-- POLÍTICAS --}}
+                                            <div class="mb-4 form-check form-switch">
+                                                <input class="form-check-input @error('policies') is-invalid @enderror" type="checkbox" role="switch" name="policies" id="policies" required>
+                                                <label class="form-check-label" for="policies">
+                                                    <span class="text-danger">*</span> {{ __('I have read and accept the following legal policies') }}:
+                                                </label>
+                                                <div>
+                                                    <a class="link-secondary-custom" href="{{ route('legal-text.public', $lopd->slug) }}" target="_blank" rel="noopener noreferrer">{{ __('Privacy policy') }}</a>&nbsp;
+                                                    <a href="#" class="link-secondary-custom" data-fancybox data-src="#data_protect">{{ __("Basic information about data protection") }}</a>
+                                                </div>
+                                                @error('policies')
+                                                <div class="invalid-feedback d-block">
+                                                    <i class="fa fa-exclamation-circle text-danger me-1"></i> {{ $message }}
+                                                </div>
+                                                @enderror
+                                            </div>
+
+                                            <em>(<span class="text-danger">*</span>) {{ __('Required fields') }}</em>
+
+                                            {{-- CAPTCHA --}}
+                                            <div class="my-4 text-center">
+                                                <div class="captcha d-flex justify-content-center align-items-center">
+                                                    <span>{!! captcha_img('default', ['alt' => 'Captcha']) !!}</span>
+                                                    <button type="button" class="button-recaptcha bg-danger border-0 reload ms-3" id="reload">&#x21bb;</button>
+                                                </div>
+                                                <div class="mt-3">
+                                                    <input type="text" class="td_form_field td_white_bg @error('captcha') is-invalid @enderror" name="captcha" id="captcha" placeholder="{{ __('Enter the code from the image') }}" required>
+                                                    @error('captcha')
+                                                    <div class="invalid-feedback d-block">
+                                                        <i class="fa fa-exclamation-circle text-danger me-1"></i> {{ $message }}
+                                                    </div>
+                                                    @enderror
+                                                </div>
+                                                <small>(<strong class="text-danger">*</strong>) {{ __("This code is obligatory") }}</small>
+                                            </div>
+
+                                            {{-- BOTÓN --}}
+                                            <button class="td_btn td_style_1 td_radius_10 td_medium w-100" type="submit">
+                                    <span class="td_btn_in td_white_color td_accent_bg">
+                                        <span>{{ __("Submit") }}</span>
+                                    </span>
+                                            </button>
+                                        </form>
+                                    @else
+                                            {{-- INSCRIPCIÓN CERRADA --}}
+                                        <div class="td_form_card td_style_1 td_radius_10 td_gray_bg_5 d-flex flex-column align-items-center justify-content-center text-center py-5 px-4" style="height: 80%;">
+                                                <div class="td_closed_icon_wrapper d-flex align-items-center justify-content-center mb-4">
+                                                    <div class="td_closed_icon_bg d-flex align-items-center justify-content-center">
+                                                        <i class="fa-solid fa-lock"></i>
+                                                    </div>
+                                                </div>
+
+                                                <div class="td_closed_text">
+                                                    <h2 class="td_fs_32 td_semibold td_mb_15">{{ __('Inscripción cerrada') }}</h2>
+                                                    <p class="td_fs_18 td_text_color_2 td_mb_30">
+                                                        {{ __('Lo sentimos, las inscripciones para este curso ya se han cerrado.') }}<br>
+                                                        {{ __('Puedes explorar otros cursos disponibles en nuestra plataforma.') }}
+                                                    </p>
+                                                </div>
+
+                                                <div>
+                                                    <a href="/cursos" class="td_btn td_style_1 td_radius_10 td_medium">
+                                                    <span class="td_btn_in td_white_color td_accent_bg">
+                                                        <span>{{ __('Ver otros cursos') }}</span>
+                                                        <i class="fa-solid fa-arrow-right-long ms-2"></i>
+                                                    </span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                    @endif
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- COLUMNA DERECHA: IMAGEN DINÁMICA MISMA ALTURA --}}
+                        <div class="col-lg-6 d-flex">
+                            <div class="td_sign_thumb td_radius_10 w-100 overflow-hidden" style="height: 100%; border-radius:18px">
+                                @isset($model->images['Imagen formulario'][0])
+                                    <div class="td_image_cover" style="background-image: url({{ $model->images['Imagen formulario'][0]->mediaModel->getUrl() }}); background-size: cover; background-position: center; width: 100%; height: 100%;"></div>
+                                @else
+                                    <div class="td_image_cover" style="background-image: url({{ asset('assets/image/web/9.jpg') }}); background-size: cover; background-position: center; width: 100%; height: 100%;"></div>
+                                @endisset
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="td_height_120 td_height_lg_80"></div>
+            </section>
+        </div>
+
+
+        <div class="container-custom2" style="max-width: 1660px;">
+            <x-service-list class="service__slider-glide"/>
+        </div>
+
+
     </div>
+
 @endsection

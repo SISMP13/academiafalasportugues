@@ -18,8 +18,8 @@
     @if(!is_null($socialImage))
         <meta property="og:image" content="{{$socialImage->mediaModel->getUrl()}}" />
     @else
-        @isset($generalConfiguration->images['Imagen social'][0])
-            <meta property="og:image" content="{{$generalConfiguration->images['Imagen social'][0]->mediaModel->getUrl()}}" />
+        @isset($generalConfiguration->images['Imagen enlace'][0])
+            <meta property="og:image" content="{{$generalConfiguration->images['Imagen enlace'][0]->mediaModel->getUrl()}}" />
         @endisset
     @endif
 
@@ -34,8 +34,8 @@
     @if(!is_null($socialImage))
         <meta name="twitter:image" content="{{$socialImage->mediaModel->getUrl()}}" />
     @else
-        @isset($generalConfiguration->images['Imagen social'][0])
-            <meta name="twitter:image" content="{{$generalConfiguration->images['Imagen social'][0]->mediaModel->getUrl()}}" />
+        @isset($generalConfiguration->images['Imagen enlace'][0])
+            <meta name="twitter:image" content="{{$generalConfiguration->images['Imagen enlace'][0]->mediaModel->getUrl()}}" />
         @endisset
     @endif
 @endsection

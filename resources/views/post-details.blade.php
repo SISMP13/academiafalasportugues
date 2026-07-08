@@ -142,6 +142,7 @@
                                     <img src="{{ $image->mediaModel->getUrl('gallery') }}" class="img-fluid" alt="{{$image->mediaModel->name}}">
                                 </a>
                             </div>
+
                         </div>
                     @endforeach
                 </div>
