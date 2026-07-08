@@ -22,7 +22,7 @@ class CourseInscriptionsCommand extends Command
         $this->comment('Hecho');
 
         $this->comment('Dando permisos al administrador...');
-        $permissions = ['index', 'edit', 'update'];
+        $permissions = ['index', 'edit', 'update', 'destroy'];
 
 
         $adminRole = Role::findOrCreate('admin');

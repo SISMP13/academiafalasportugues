@@ -8,6 +8,9 @@
             <h4 class="text-120 mb-0">
                 <span class="text-90">Editar inscripción</span>
             </h4>
+            <a href="{{ route('courses.course-inscriptions.index') }}" class="btn btn-sm btn-light">
+                <i class="fa fa-arrow-left"></i> Volver
+            </a>
         </div>
 
         <div class="card-body">
