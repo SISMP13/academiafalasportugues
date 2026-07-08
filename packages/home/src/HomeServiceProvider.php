@@ -2,7 +2,9 @@
 
 namespace Bittacora\Home;
 
+use Bittacora\Home\Http\Livewire\HomeSlideDatatable;
 use Bittacora\Multimedia\MultimediaFacade;
+use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Bittacora\Home\Commands\HomeCommand;
@@ -38,6 +40,9 @@ class HomeServiceProvider extends PackageServiceProvider
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
         $this->loadViewsFrom(__DIR__. '/../resources/views', 'home');
         $this->loadTranslationsFrom(__DIR__ .'/../resources/lang', 'home');
+        $this->loadTranslationsFrom(__DIR__ .'/../resources/lang-home-slides', 'home-slides');
+
+        Livewire::component('home::home-slide-datatable', HomeSlideDatatable::class);
 
         /*MultimediaFacade::registerMediaConversion(function ($media) {
             $media->addMediaConversion('cover')

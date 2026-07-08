@@ -1,0 +1,31 @@
+COMANDOS A EJECUTAR EN PRODUCCIÓN
+==================================
+
+Pendiente de aplicar en el servidor de producción tras subir los archivos
+de las sesiones de sliders del Home, banner superior e inscripciones a cursos.
+
+1) Migraciones nuevas (crean la tabla home_slides, la columna banner_link
+   en general_configurations, y registran la location de imagen "Imagen del slide"):
+
+   php artisan migrate --force
+
+2) Registrar el nuevo módulo de admin "Slider Portada" (menú, permisos
+   home-slides.index/create/store/edit/update/destroy). Es idempotente,
+   se puede ejecutar sin miedo aunque ya se haya ejecutado antes:
+
+   php artisan home:install
+
+3) Registrar los permisos nuevos de edición de inscripciones
+   (courses.course-inscriptions.edit / courses.course-inscriptions.update).
+   También idempotente:
+
+   php artisan course-inscriptions:install
+
+NOTA: NO hace falta ejecutar "php artisan courses:install" en producción.
+Solo fue necesario en local porque esa base de datos partía completamente
+vacía. En producción el módulo "courses" ya existe.
+
+Las mejoras del formulario público de inscripción a cursos (validación de
+email, comprobación de curso activo/abierto, email de notificación,
+throttle, anti-duplicados) NO requieren ningún comando adicional, solo
+subir los archivos correspondientes.

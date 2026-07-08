@@ -28,7 +28,8 @@ class CourseInscriptionsDatatable extends DataTableComponent
             Column::make('Correo electrónico', 'email')->sortable()->searchable(),
             Column::make('Teléfono', 'phone'),
             Column::make('Mensaje', 'message'),
-
+            Column::make('Curso', 'course_id')->view('course-inscriptions::datatable.course-column'),
+            Column::make('Acciones', 'id')->view('course-inscriptions::datatable.actions-column'),
         ];
     }
 

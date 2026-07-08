@@ -5,37 +5,26 @@ namespace Bittacora\Home\Models;
 use Bittacora\Content\Models\ContentModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\EloquentSortable\Sortable;
+use Spatie\EloquentSortable\SortableTrait;
 use Spatie\Translatable\HasTranslations;
-use Wildside\Userstamps\Userstamps;
 
-class Home extends Model
+class HomeSlide extends Model implements Sortable
 {
     use HasFactory;
+    use SortableTrait;
     use HasTranslations;
 
     protected $guarded = ['save'];
 
-public $translatable = [
-    'title3',
-    'text3',
-
-    'title4',
-    'text4',
-
-    'title_bloque_1',
-    'text_bloque_1',
-    'text_bloque_2',
-
-    'title_bloque_2',
-    'text_bloque_3',
-
-    'title_bloque_3',
-    'title_bloque_4',
-    'text_bloque_4',
-
-    'text_btn1',
-    'url_btn1',
-];
+    public $translatable = [
+        'title',
+        'text',
+        'text_btn',
+        'url_btn',
+        'text_btn2',
+        'url_btn2',
+    ];
 
     public $sortable = [
         'sort_when_creating' => true

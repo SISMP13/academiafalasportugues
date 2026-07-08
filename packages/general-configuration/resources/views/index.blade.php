@@ -37,7 +37,7 @@
                     @livewire('form::input-text', ['name' => 'business_province', 'labelText' => 'Provincia', 'value' => $model->business_province])
                     @livewire('form::input-text', ['name' => 'business_country', 'labelText' => 'País', 'value' => $model->business_country])
                     @livewire('form::input-text', ['name' => 'business_phone', 'labelText' => 'Teléfono', 'value' => $model->business_phone])
-                    @livewire('form::input-text', ['name' => 'business_fax', 'labelText' => 'Fax', 'value' => $model->business_fax])
+
                     @livewire('form::input-text', ['name' => 'business_mobile', 'labelText' => 'Móvil', 'value' => $model->business_mobile])
                     @livewire('form::input-text', ['name' => 'business_email', 'labelText' => 'Email de contacto', 'value' => $model->business_email])
                 </div>
@@ -72,11 +72,21 @@
 
             <div class="card bcard  mb-4">
                 <div class="card-header bgc-primary-d1 text-white border-0 d-flex justify-content-between">
+                    Banner Principio Web
+                </div>
+                <div class="card-body">
+                    @livewire('form::input-text', ['name' => 'business_fax', 'labelText' => 'Texto Banner', 'value' => $model->business_fax])
+                    @livewire('form::input-text', ['name' => 'banner_link', 'labelText' => 'Link Banner', 'value' => $model->banner_link])
+                </div>
+            </div>
+
+            <div class="card bcard  mb-4">
+                <div class="card-header bgc-primary-d1 text-white border-0 d-flex justify-content-between">
                     Pie de la web
                 </div>
                 <div class="card-body">
                     @livewire('form::input-text', ['name' => 'footer_copyright', 'labelText' => 'Copyright', 'value' => $model->footer_copyright])
-                    @livewire('utils::tinymce-editor', ['name' => 'footer_description', 'labelText' => 'Descripción', 'value' => $model->footer_description])
+                    @livewire('form::input-text', ['name' => 'footer_description', 'labelText' => 'Descripción', 'value' => $model->footer_description])
                     {{--@livewire('form::input-text', ['name' => 'footer_description', 'labelText' => 'Descripción', 'value' => $model->footer_description])--}}
                 </div>
             </div>

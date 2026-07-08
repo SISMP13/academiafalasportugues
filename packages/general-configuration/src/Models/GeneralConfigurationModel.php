@@ -19,7 +19,7 @@ class GeneralConfigurationModel extends Model
         'facebook', 'x', 'instagram', 'linkedin', 'whatsapp', 'youtube', 'tiktok',
         'business_address', 'business_postal_code', 'business_city', 'business_province',
         'business_country', 'business_phone', 'business_fax', 'business_mobile', 'business_email',
-        'footer_copyright', 'footer_description'
+        'footer_copyright', 'footer_description', 'banner_link'
     ];
 
     protected $translatable = [

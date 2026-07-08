@@ -57,7 +57,7 @@ Route::get('/clear-cache', function () {
 Route::group(['middleware' => ['web']], function () {
     Route::get('/cursos', [CoursePublicController::class, 'main'])->name('courses.public');
     Route::get('/curso/{slug}', [CoursePublicController::class, 'courseDetails'])->name('course.details');
-    Route::post('/inscripcion-curso/{id}', [CoursePublicController::class, 'storeInscription'])->name('course-inscription.store');
+    Route::post('/inscripcion-curso/{id}', [CoursePublicController::class, 'storeInscription'])->middleware('throttle:5,1')->name('course-inscription.store');
 });
 
 

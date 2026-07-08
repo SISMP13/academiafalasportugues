@@ -43,6 +43,7 @@ class UpdateGeneralConfigurationRequest extends FormRequest
             'business_country' => 'nullable',
             'business_phone' => 'nullable',
             'business_fax' => 'nullable',
+            'banner_link' => 'nullable|string',
             'business_mobile' => 'nullable',
             'business_email' => 'nullable',
             'footer_copyright' => 'nullable',

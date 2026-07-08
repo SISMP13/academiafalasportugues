@@ -11,6 +11,7 @@ use Bittacora\ContentMultimediaDocuments\Models\ContentMultimediaDocumentsModel;
 use Bittacora\ContentMultimediaImages\Models\ContentMultimediaImagesModel;
 use Bittacora\ContentMultimediaVideo\Models\ContentMultimediaVideoModel;
 use Bittacora\Home\Models\Home;
+use Bittacora\Home\Models\HomeSlide;
 use Bittacora\Home\Http\Requests\UpdateHomeRequest;
 use Bittacora\Language\LanguageFacade;
 use Bittacora\Multimedia\Models\Multimedia;
@@ -87,7 +88,14 @@ class HomeController extends Controller
         $model = Home::findOrfail(1);
         $model->images = ContentMultimediaFacade::retrieveContentImages('home', $model->content->id);
         $model->videos = $this->retrieveContentVideos($model->content->id);
-        return view('home', compact('model'));
+
+        $slides = HomeSlide::where('active', 1)->orderBy('order_column')->get();
+        foreach ($slides as $slide) {
+            $slideImages = ContentMultimediaFacade::retrieveContentImages('home', $slide->content->id);
+            $slide->image = $slideImages['Imagen del slide'][0] ?? null;
+        }
+
+        return view('home', compact('model', 'slides'));
     }
 
     /*public function isMultimediaAssociatedToContent($contentId, $multimediaId, $type)

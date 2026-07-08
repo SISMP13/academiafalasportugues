@@ -17,6 +17,7 @@ namespace Bittacora\CourseInscriptions\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Bittacora\CourseInscriptions\Http\Requests\UpdateCourseInscriptionRequest;
 use Bittacora\CourseInscriptions\Models\CourseInscriptionModel;
 use Bittacora\Courses\Models\CourseModel;
 
@@ -52,5 +53,24 @@ class CourseInscriptionsController extends Controller
 
         // pasar datos a la vista
         return view('course-inscriptions::index', compact('inscriptions', 'courses', 'search', 'courseId'));
+    }
+
+    public function edit(CourseInscriptionModel $model)
+    {
+        $this->authorize('courses.course-inscriptions.edit');
+
+        $model->load('course');
+
+        return view('course-inscriptions::edit', compact('model'));
+    }
+
+    public function update(UpdateCourseInscriptionRequest $request, CourseInscriptionModel $model)
+    {
+        $this->authorize('courses.course-inscriptions.update');
+
+        $model->fill($request->validated())->save();
+
+        return redirect()->route('courses.course-inscriptions.edit', $model)
+            ->with(['alert-success' => 'La inscripción ha sido actualizada']);
     }
 }

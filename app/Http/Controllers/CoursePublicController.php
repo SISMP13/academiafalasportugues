@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CourseInscriptionRequest;
+use App\Mail\CourseInscriptionMail;
 use Bittacora\ContentMultimedia\ContentMultimediaFacade;
 use Bittacora\CourseInscriptions\Models\CourseInscriptionModel;
 use Bittacora\Courses\Models\CourseModel;
+use Bittacora\GeneralConfiguration\Models\GeneralConfigurationModel;
 use Bittacora\LegalText\Models\LegalText;
+use Illuminate\Support\Facades\Mail;
 
 class CoursePublicController extends Controller
 {
@@ -47,15 +50,36 @@ class CoursePublicController extends Controller
      */
     public function storeInscription(CourseInscriptionRequest $request, int $id)
     {
-        $course = CourseModel::findOrFail($id);
+        $course = CourseModel::where('active', 1)->findOrFail($id);
+
+        if (!$course->inscription) {
+            return redirect()->route('course.details', $course->slug)->with('response', [
+                'status' => 'error',
+                'message' => __('Las inscripciones para este curso están cerradas'),
+            ]);
+        }
+
         $validated = $request->validated();
         $validated['course_id'] = $id;
         unset($validated['captcha'], $validated['policies']);
-        if (!CourseInscriptionModel::create($validated)){
-            $response = ['status' => 'error', 'message' => __("You were unable to register for the course, please try again later")];
-        } else {
+
+        try {
+            $inscription = CourseInscriptionModel::create($validated);
             $response = ['status' => 'success', 'message' => __("Your course registration has been successfully submitted")];
+
+            $configuration = GeneralConfigurationModel::first();
+            if (!empty($configuration?->reception_email)) {
+                try {
+                    Mail::to($configuration->reception_email)->send(new CourseInscriptionMail($inscription));
+                } catch (\Throwable $e) {
+                    report($e);
+                }
+            }
+        } catch (\Throwable $e) {
+            report($e);
+            $response = ['status' => 'error', 'message' => __("You were unable to register for the course, please try again later")];
         }
+
         return redirect()->route('course.details', $course->slug)->with('response', $response);
     }
 }

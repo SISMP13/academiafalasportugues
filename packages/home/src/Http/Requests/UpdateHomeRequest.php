@@ -21,19 +21,22 @@ class UpdateHomeRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'title' => 'nullable',
-            'text' => 'nullable',
-            'text_btn' => 'nullable',
-            'url_btn' => 'nullable',
-            'text_btn2' => 'nullable',
-            'url_btn2' => 'nullable',
-            'title2' => 'nullable',
-            'text2' => 'nullable',
-            'title3' => 'nullable',
-            'text3' => 'nullable',
-            'title4' => 'nullable',
-            'text4' => 'nullable',
+       return [
+            // Bloque central
+            'title_bloque_1' => 'nullable|string',
+            'text_bloque_1' => 'nullable|string',
+            'text_bloque_2' => 'nullable|string',
+            'text_btn1' => 'nullable|string',
+            'url_btn1' => 'nullable|string',
+
+            // Destacados
+            'title4' => 'nullable|string',
+            'title_bloque_2' => 'nullable|string',
+            'text_bloque_3' => 'nullable|string',
+
+            'title_bloque_3' => 'nullable|string',
+            'title_bloque_4' => 'nullable|string',
+            'text_bloque_4' => 'nullable|string',
         ];
     }
 }

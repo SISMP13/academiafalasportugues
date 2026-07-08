@@ -17,3 +17,9 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+# Capturas de referencia visual (solo locales)
+/public/assets/capturas
+
+# Nunca subir archivos comprimidos
+*.zip
