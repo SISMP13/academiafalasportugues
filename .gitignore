@@ -23,3 +23,14 @@ yarn-error.log
 
 # Nunca subir archivos comprimidos
 *.zip
+
+# Página de "en construcción" del hosting, no forma parte del proyecto
+/index.html
+/css
+/js
+/images
+/skel
+
+# Archivos generados por el panel del hosting (Plesk)
+/public/.php-ini
+/public/.php-version

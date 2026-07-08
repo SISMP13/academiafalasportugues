@@ -26,7 +26,7 @@
 
             @livewire('utils::tinymce-editor', ['name' => 'long_text_3', 'labelText' => 'Texto bloque 3', 'value' => $model->long_text_3])
             @livewire('utils::tinymce-editor', ['name' => 'text2', 'labelText' => 'Texto bloque 4', 'value' => $model->text2])
-            {{--@livewire('form::input-text', ['name' => 'breadcrumb', 'labelText' => 'Migas de pan', 'required'=>false, 'value' => $model->breadcrumb])--}}
+            @livewire('form::input-text', ['name' => 'breadcrumb', 'labelText' => 'Enlace Test', 'required'=>false, 'value' => $model->breadcrumb])
 
             @livewire('form::input-checkbox', [
             'name' => 'active',

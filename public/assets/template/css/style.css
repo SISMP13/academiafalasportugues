@@ -7353,7 +7353,7 @@ html .ui-button.ui-state-disabled:active {
 /*--------------------------------------------------------------
 8. Header
 ----------------------------------------------------------------*/
-.td_site_header {
+/*.td_site_header {
   position: absolute;
   z-index: 101;
   width: 100%;
@@ -7361,7 +7361,7 @@ html .ui-button.ui-state-disabled:active {
   top: 0px;
   -webkit-transition: all 0.4s ease;
   transition: all 0.4s ease;
-}
+}*/
 
 .td_header_social_btns {
   display: -webkit-box;
@@ -8271,7 +8271,7 @@ html .ui-button.ui-state-disabled:active {
     display: -ms-flexbox !important;
     display: flex !important;
     position: fixed;
-    top: 150px !important;
+    top: 130px !important;
     left: 50%;
     -webkit-transform: translateX(-50%);
             transform: translateX(-50%);

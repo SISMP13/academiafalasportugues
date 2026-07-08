@@ -86,7 +86,7 @@
 <body>
 <div class="body-mail">
     <div class="body-mail__header">
-        <img src="{{asset('assets/image/logo-mail.png')}}" alt="{{config('app.name')}}" width="200">
+        <img src="{{asset('assets/image/logo-mail2.png')}}" alt="{{config('app.name')}}" width="200">
     </div>
     <div class="body-mail__content">
         <p>

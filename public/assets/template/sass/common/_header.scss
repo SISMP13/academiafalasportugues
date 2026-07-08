@@ -2,11 +2,8 @@
 8. Header
 ----------------------------------------------------------------*/
 .td_site_header {
-  position: absolute;
   z-index: 101;
   width: 100%;
-  left: 0;
-  top: 0px;
   transition: all 0.4s ease;
 }
 
@@ -257,7 +254,7 @@
     position: relative;
   }
   .td_main_header_in {
-    height: 90px;
+    height: 100px;
   }
   .td_top_header_in {
     height: 50px;
@@ -628,7 +625,7 @@
 
 @media screen and (max-width: 1199px) {
   .td_site_header_spacing_100 {
-    height: 80px;
+    height: 100px;
   }
 
   .td_site_header.td_style_1 {
@@ -871,7 +868,7 @@
       width: 1296px !important;
       display: flex !important;
       position: fixed;
-      top: 150px !important;
+      
       left: 50%;
       transform: translateX(-50%);
       padding: 5px 15px 10px;
@@ -929,7 +926,7 @@
     .td_top_header + .td_main_header {
       .td_nav .td_nav_list {
         .td_mega_wrapper {
-          top: 150px !important;
+          top: 130px !important;
         }
       }
     }
@@ -1186,7 +1183,7 @@
 
   .td_site_header.td_style_1 {
     .td_main_header_in {
-      height: 90px;
+      height: 100px;
     }
   }
 
