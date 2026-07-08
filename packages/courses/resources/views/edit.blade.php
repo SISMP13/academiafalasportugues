@@ -54,4 +54,55 @@
         </form>
         @livewire('multimedia::multimedia-images-library')
     </div>
+
+    @if(config('bpanel4-courses.activate_inscriptions') && auth()->user()->can('courses.course-inscriptions.index'))
+        <div class="card bcard mt-4">
+            <div class="card-header bgc-primary-d1 text-white border-0 d-flex justify-content-between">
+                <h4 class="text-120 mb-0">
+                    <span class="text-90">Inscritos a este curso</span>
+                </h4>
+                <a href="{{ route('courses.course-inscriptions.index', ['course_id' => $model->id]) }}" class="btn btn-sm btn-light">
+                    Ver en el listado de inscripciones
+                </a>
+            </div>
+            <div class="card-body">
+                @if($inscriptions->isEmpty())
+                    <p class="text-secondary mb-0">Todavía no hay inscripciones para este curso.</p>
+                @else
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Email</th>
+                                <th>Teléfono</th>
+                                <th>Mensaje</th>
+                                <th>Fecha</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($inscriptions as $inscription)
+                                <tr>
+                                    <td>{{ $inscription->name }}</td>
+                                    <td>{{ $inscription->email }}</td>
+                                    <td>{{ $inscription->phone }}</td>
+                                    <td>{{ $inscription->message }}</td>
+                                    <td>{{ optional($inscription->created_at)->format('d/m/Y H:i') }}</td>
+                                    <td class="text-center">
+                                        @can('courses.course-inscriptions.edit')
+                                            <a href="{{ route('courses.course-inscriptions.edit', $inscription) }}" class="text-success">
+                                                <i class="fa fa-pencil"></i>
+                                            </a>
+                                        @endcan
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @endif
+            </div>
+        </div>
+    @endif
 @endsection

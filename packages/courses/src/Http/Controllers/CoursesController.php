@@ -82,10 +82,19 @@ class CoursesController extends Controller
         // 🔑 Forzar carga de la relación "content"
         $model->load('content');
 
+        $inscriptions = collect();
+        if (config('bpanel4-courses.activate_inscriptions')) {
+            $inscriptionsRelation = $model->inscriptions();
+            if ($inscriptionsRelation) {
+                $inscriptions = $inscriptionsRelation->orderBy('created_at', 'desc')->get();
+            }
+        }
+
         return view('courses::edit', [
             'language' => $language,
             'model' => $model,
-            'multimedia' => MultimediaFacade::getAll()
+            'multimedia' => MultimediaFacade::getAll(),
+            'inscriptions' => $inscriptions,
         ]);
     }
 
