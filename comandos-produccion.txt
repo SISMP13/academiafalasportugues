@@ -21,6 +21,17 @@ de las sesiones de sliders del Home, banner superior e inscripciones a cursos.
 
    php artisan course-inscriptions:install
 
+4) IMPORTANTE - Migrar el slider antiguo a los nuevos slides, para que la
+   web no se quede sin carrusel en portada. Este seeder lee los datos que
+   YA ESTÁN en la tabla "homes" (title, text, text_btn, url_btn, title2,
+   text2, text_btn3, url_btn3, text_btn4, url_btn4) y las imágenes ya
+   subidas en la location "Imagen bloque 1", y crea 2 registros en
+   home_slides reutilizando esa misma información e imágenes (no sube
+   ningún archivo nuevo). Es seguro ejecutarlo aunque no haya datos
+   (no hace nada) y no se duplica si ya existen slides:
+
+   php artisan db:seed --class=HomeSlidesSeeder
+
 NOTA: NO hace falta ejecutar "php artisan courses:install" en producción.
 Solo fue necesario en local porque esa base de datos partía completamente
 vacía. En producción el módulo "courses" ya existe.
