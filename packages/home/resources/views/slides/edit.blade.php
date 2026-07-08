@@ -36,6 +36,20 @@
                 'allowedExtensions' => $allowedExtensions
             ])
 
+            @livewire('content-multimedia-images::content-multimedia-images-widget', [
+                'contentId' => $model->content->id,
+                'module' => 'home',
+                'permission' => 'home-slides.edit'
+            ])
+
+            <div class="alert d-flex bgc-yellow-l4 brc-yellow-m4 border-1 border-l-0 pl-3 radius-l-0 mb-3" role="alert">
+                <div class="position-tl h-102 border-l-4 brc-yellow mt-n1px"></div>
+                <i class="fas fa-exclamation-triangle mr-3 text-180 text-yellow"></i>
+                <span class="align-self-center text-yellow-d2 text-120">
+                    Tras subir la imagen, asígnale la posición <strong>"Imagen del slide"</strong> en el listado de "Imágenes adjuntas" para que se muestre en la portada.
+                </span>
+            </div>
+
             @livewire('utils::created-updated-info', ['model' => $model])
 
             <div class="col-12 mt-5 border-t-1 bgc-secondary-l4 brc-secondary-l2 py-35 d-flex justify-content-center">
